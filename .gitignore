@@ -21,8 +21,6 @@ System.map
 
 #Dirty outputs
 build.sh
-script.sh
-optikernel
 arch/arm64/boot/Image.gz
 arch/arm64/boot/dtb/
 arch/arm64/boot/boot.img-kernel
@@ -121,3 +119,9 @@ vmlinux
 
 *.builtin
 !.gitignore
+
+#Temporarily Untracked
+b
+OPTI-KERNEL/
+
+
