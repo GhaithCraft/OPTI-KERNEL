@@ -11,5 +11,5 @@ echo "CleanUp"
 make clean && make mrproper
 
 echo "Stock DEFCON"
-make exynos7880-a7y17lte_eur_defconfig
+make Optikernel-a7y17lte_defconfig
 make -j3
