@@ -15,9 +15,6 @@
 #include <linux/workqueue.h>
 #include <linux/debugfs.h>
 #include <linux/seq_file.h>
-#if defined(CONFIG_SEC_DEBUG) && defined(CONFIG_REGULATOR_S2MPU05)
-#include <linux/mfd/samsung/s2mpu05.h>
-#endif
 
 #include "power.h"
 
@@ -585,47 +582,6 @@ static ssize_t pm_freeze_timeout_store(struct kobject *kobj,
 power_attr(pm_freeze_timeout);
 
 #endif	/* CONFIG_FREEZER*/
-
-#if defined(CONFIG_SEC_DEBUG) && defined(CONFIG_REGULATOR_S2MPU05)
-static int reset_enabled = 0;
-
-static ssize_t reset_enabled_show(struct kobject *kobj,
-					struct kobj_attribute *attr,
-					char *buf)
-{
-	pr_info("%s (%d)\n", __func__, reset_enabled);
-	return sprintf(buf, "%d", reset_enabled);
-}
-
-static ssize_t reset_enabled_store(struct kobject *kobj,
-				       struct kobj_attribute *attr,
-				       const char *buf, size_t n)
-{
-	unsigned long val;
-
-	if (kstrtoul(buf, 10, &val))
-		return -EINVAL;
-
-	reset_enabled = !!val;
-
-#ifdef CONFIG_SEC_PM_DEBUG
-	pmic_reset_enabled(reset_enabled);
-#endif
-
-	pr_info("%s (%d)\n", __func__, reset_enabled);
-	return n;
-}
-
-static struct kobj_attribute reset_enabled_attr = {
-	.attr	= {
-		.name = __stringify(reset_enabled),
-		.mode = 0644,
-	},
-	.show	= reset_enabled_show,
-	.store	= reset_enabled_store,
-};
-#endif
-
 #ifdef CONFIG_SW_SELF_DISCHARGING
 static char selfdischg_usage_str[] =
 	"[START]\n"
@@ -677,9 +633,6 @@ static struct attribute * g[] = {
 #endif
 #ifdef CONFIG_FREEZER
 	&pm_freeze_timeout_attr.attr,
-#endif
-#if defined(CONFIG_SEC_DEBUG) && defined(CONFIG_REGULATOR_S2MPU05)
-	&reset_enabled_attr.attr,	/* Support 1-key hard reset */
 #endif
 #ifdef CONFIG_SW_SELF_DISCHARGING
 	&selfdischg_usage_attr.attr,
