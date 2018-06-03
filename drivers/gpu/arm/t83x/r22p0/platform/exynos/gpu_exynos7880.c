@@ -72,7 +72,7 @@ void __iomem *g3d1_outstanding_regs;
 
 /*  clk,vol,abb,min,max,down stay, pm_qos mem, pm_qos int, pm_qos cpu_kfc_min, pm_qos cpu_egl_max */
 static gpu_dvfs_info gpu_dvfs_table_default[] = {
-	{1034, 900000, 0, 98, 100, 1, 0, 1539000, 400000, 1482000, CPU_MAX},
+	{1034, 1000000, 0, 98, 100, 1, 0, 1539000, 400000, 1482000, CPU_MAX},
 	{962,  900000, 0, 98,  99, 1, 0, 1539000, 400000, 1482000, CPU_MAX},
 	{845,  900000, 0, 78,  98, 1, 0, 1539000, 400000,  962000, CPU_MAX},
 	{756,  900000, 0, 78,  85, 1, 0, 1352000, 400000,       0, CPU_MAX},
@@ -91,9 +91,10 @@ static int mif_min_table[] = {
 };
 
 static gpu_attribute gpu_config_attributes[] = {
-	{GPU_MAX_CLOCK, 962},
-	{GPU_MAX_CLOCK_LIMIT, 962},
+	{GPU_MAX_CLOCK, 1034},
+	{GPU_MAX_CLOCK_LIMIT, 1034},
 	{GPU_MIN_CLOCK, 343},
+	{GPU_MIN_CLOCK_LIMIT, 343},
 	{GPU_DVFS_START_CLOCK, 343},
 	{GPU_DVFS_BL_CONFIG_CLOCK, 343},
 	{GPU_GOVERNOR_TYPE, G3D_DVFS_GOVERNOR_INTERACTIVE},
